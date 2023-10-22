@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-12 col-lg-4 bg-secondary">
+            <div class="col-12 mt-5">
+                <h3 class="text-white" style="border-bottom: 1px solid white;">Line Chart</h3>
+            </div>
+            <div class="col-12 px-3">
+                <p class="text-white">Input your Title, X/Y labels and data. Check style options. Then make chart and download it as an image.</p>
+            </div>
+            <div class="col-12">
+                <div class="input-group w-100 pb-2 px-3">
+                    <span class="input-group-text bg-primary text-white bg-opacity-25">Title</span>
+                    <input type="text" class="form-control" id="title_input" name="title_input">
+                </div>
+                <div class="d-flex pb-2 px-3 border-bottom">
+                    <div class="input-group w-50 pe-1">
+                        <span class="input-group-text bg-primary text-white bg-opacity-25">X-label</span>
+                        <input type="text" class="form-control" id="xlabel_input" name="xlabel_input">
+                    </div>
+                    <div class="input-group w-50 ps-1">
+                        <span class="input-group-text bg-primary text-white bg-opacity-25">Y-label</span>
+                        <input type="text" class="form-control" id="ylabel_input" name="ylabel_input">
+                    </div>
+                </div>
+
+                <div class="col-12 mt-2 pb-2">
+                    <div class="d-flex px-3">
+                        <span class="input-group-text bg-primary text-white bg-opacity-25 me-1">Border</span>
+                        <div class="btn-group px-1" role="group">
+                            <input type="radio" class="btn-check" name="border_top_switch" id="border_top_switch1" autocomplete="off" checked>
+                            <label class="btn btn-outline-light px-1" for="border_top_switch1">⇡</label>
+                            <input type="radio" class="btn-check" name="border_top_switch" id="border_top_switch2" autocomplete="off">
+                            <label class="btn btn-outline-light px-2" for="border_top_switch2">X</label>
+                        </div>
+                        <div class="btn-group pe-1" role="group">
+                            <input type="radio" class="btn-check" name="border_bottom_switch" id="border_bottom_switch1" autocomplete="off" checked>
+                            <label class="btn btn-outline-light px-1" for="border_bottom_switch1">⇣</label>
+                            <input type="radio" class="btn-check" name="border_bottom_switch" id="border_bottom_switch2" autocomplete="off">
+                            <label class="btn btn-outline-light px-2" for="border_bottom_switch2">X</label>
+                        </div>
+                        <div class="btn-group pe-1" role="group">
+                            <input type="radio" class="btn-check" name="border_left_switch" id="border_left_switch1" autocomplete="off" checked>
+                            <label class="btn btn-outline-light px-1" for="border_left_switch1">⇠</label>
+                            <input type="radio" class="btn-check" name="border_left_switch" id="border_left_switch2" autocomplete="off">
+                            <label class="btn btn-outline-light px-2" for="border_left_switch2">X</label>
+                        </div>
+                        <div class="btn-group pe-1" role="group">
+                            <input type="radio" class="btn-check" name="border_right_switch" id="border_right_switch1" autocomplete="off" checked>
+                            <label class="btn btn-outline-light px-1" for="border_right_switch1">⇢</label>
+                            <input type="radio" class="btn-check" name="border_right_switch" id="border_right_switch2" autocomplete="off">
+                            <label class="btn btn-outline-light px-2" for="border_right_switch2">X</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex pb-2 px-3">
+                    <span class="input-group-text bg-primary text-white bg-opacity-25 me-1">Ratio</span>
+                    <div class="btn-group ps-1" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="ratio_input" id="ratio_input1" autocomplete="off">
+                        <label class="btn btn-outline-light px-2" for="ratio_input1">4:1</label>
+                        
+                        <input type="radio" class="btn-check" name="ratio_input" id="ratio_input2" autocomplete="off">
+                        <label class="btn btn-outline-light px-2" for="ratio_input2">4:2</label>
+                        
+                        <input type="radio" class="btn-check" name="ratio_input" id="ratio_input3" autocomplete="off" checked>
+                        <label class="btn btn-outline-light px-2" for="ratio_input3">4:3</label>
+
+                        <input type="radio" class="btn-check" name="ratio_input" id="ratio_input4" autocomplete="off">
+                        <label class="btn btn-outline-light px-2" for="ratio_input4">4:4</label>
+                    </div>
+                </div>
+
+                <div class="d-flex pb-2 px-3">
+                    <div class="btn-group pe-1 w-50" role="group">
+                        <input type="radio" class="btn-check" name="legend_switch" id="legend_switch1" autocomplete="off" checked>
+                        <label class="btn btn-outline-light px-2" for="legend_switch1">LABEL On</label>
+                        <input type="radio" class="btn-check" name="legend_switch" id="legend_switch2" autocomplete="off">
+                        <label class="btn btn-outline-light px-2" for="legend_switch2">Off</label>
+                    </div>
+                    <div class="btn-group ps-1 w-50" role="group">
+                        <input type="radio" class="btn-check" name="grid_switch" id="grid_switch1" autocomplete="off" checked>
+                        <label class="btn btn-outline-light px-2" for="grid_switch1">GRID On</label>
+                        <input type="radio" class="btn-check" name="grid_switch" id="grid_switch2" autocomplete="off">
+                        <label class="btn btn-outline-light px-3 me-1" for="grid_switch2">Off</label>
+                    </div>
+                </div>
+                <div class="d-flex pb-2 px-3 border-bottom">
+                    <div class="btn-group pe-1 w-100" role="group">
+                        <input type="radio" class="btn-check" name="bkwt_switch" id="bkwt_switch1" autocomplete="off" >
+                        <label class="btn btn-outline-light px-2" for="bkwt_switch1">BLACK</label>
+                        <input type="radio" class="btn-check" name="bkwt_switch" id="bkwt_switch2" autocomplete="off" checked>
+                        <label class="btn btn-outline-light px-2" for="bkwt_switch2">WHITE</label>
+                    </div>
+                </div>
+
+                <div class="col-12 my-2 pb-2 border-bottom">
+                    <div class="input-group px-3">
+                        <span class="input-group-text bg-danger text-white bg-opacity-25">data or Item(X)</span>
+                    </div>
+                    <div class="d-flex flex-wrap px-3" id="x_data_inputs">
+                        <input type="text" class="form-control ms-1 mt-1" id="xdata_input0" name="xdata_input0" style="width: 80px;" placeholder="1" onfocus="addXData();return false" required>
+                    </div>
+                </div>
+                <div class="col-12 my-2" id="y_inputs">
+                    <input type="text" name="item_num" id="item_num" style="display: none;" value="1">
+                    <input type="text" name="xData_num" id="xData_num" style="display: none;" value="1">
+                    <input type="text" name="yData_num0" id="yData_num0" style="display: none;" value="1">
+                    <div class="d-flex px-3 mb-2">
+                        <div class="input-group justify-content-end">
+                            <button type="button" class="btn btn-outline-warning px-3" onclick="addItem();return false">Data +</button>
+                            <button type="button" class="btn btn-outline-warning px-3" onclick="delItem();return false">-</button>
+                        </div>
+                    </div>
+                    <div class="d-flex px-3">
+                        <div class="input-group" id="y_inputs0">
+                            <span class="input-group-text bg-warning text-white bg-opacity-25">Y data #1</span>
+                            <input type="text" class="form-control" name="data_label_input0" id="data_label_input0" placeholder="data label 1">
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap px-3 mb-3" id="y_data_inputs0">
+                        <input type="number" class="form-control ms-1 mt-1" name="ydata0_input0" id="ydata0_input0" style="width: 80px;" placeholder="1" onfocus="addYData(0);return false" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex col-12 justify-content-center px-3 pb-5 my-2">
+                <button class="btn btn-outline-light w-100 bg-success text-white" type="button" id="make_chart" onclick="makeChart();return false">Make Chart</button>
+            </div>
+        </div>
+        <div class="d-flex col-lg-8 pt-4 pb-5 h-100">
+            <div class="col-12 mt-3">
+                <div class="d-flex flex-column w-100 px-5 py-3 align-item-start">
+                    <img id="chart_img" src="data:image/png;base64, {{ img_file }}" alt="graph">
+                    <button class="btn btn-primary mt-3 w-100" type="button" onclick="downloadImg()">Image Download</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+
+<script>
+    ajaxUrl = '{{ url_for("chartImage.line_ajax") }}'
+</script>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>    
+<script src="{{ url_for('static', filename='line.js') }}"></script>
+
+{% endblock %}

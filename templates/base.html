@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>잡다한 코딩 프로젝트 웹</title>
-    <meta name="description" content="내 맘대로 취미 코딩, 잡다한 컨텐츠">
-    <meta name="keywords" content="개인홈페이지, 코딩, 파이썬, 자바스크립트, 웹어플리케이션, 웹 컨텐츠, 블로그, 엑셀문서, 데이터시각화, 차트">
+    <title>dalllab-Flask Web</title>
+    <meta name="description" content="Web with Python Contents, matplotlib">
+    <meta name="keywords" content="data visualization, matplotlib, chart, image download">
     <meta name="author" content="dalllab">
     <meta name="og:site_name" content="dalllab">
-    <meta name="og:title" content="잡다한 코딩 프로젝트 웹">
-    <meta name="og:description" content="내 맘대로 취미 코딩, 잡다한 컨텐츠">
-    <meta name="og:keywords" content="개인홈페이지, 코딩, 파이썬, 자바스크립트, 웹어플리케이션, 웹 컨텐츠, 블로그, 엑셀문서, 데이터시각화, 차트">
+    <meta name="og:title" content="dalllab-Flask Web">
+    <meta name="og:description" content="Web with Python Contents, matplotlib">
+    <meta name="og:keywords" content="data visualization, matplotlib, chart, image download">
     <meta name="og:type" content="website">
     <meta name="og:url" content="http://dalllab.com">
-    <meta name="og:image" content="{{ url_for('static', filename='img/welcomeImg.png') }}"/>
     <meta name="google-site-verification" content="tQ9BBKk13Q6wyVttYdphcGn1FQl2PpoE5G-jpT3iXVY" />
     <meta name="naver-site-verification" content="050006e0229cbf8c23fd4210a2b667dfbbb3c7b1" />
     
@@ -24,11 +22,11 @@
         html,body{
             width: 100%;
             height: 100%;
-}
+        }
     </style>
 </head>
 
-<body class="d-flex flex-column bg-light w-100 h-100">
+<body class="d-flex flex-column w-100 h-100">
 
     <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark ps-3">
         <div class="container-fluid">
@@ -43,7 +41,6 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url_for('chartImage.line') }}">Line Chart</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('chartImage.bar') }}">Bar Chart</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('chartImage.groupbar') }}">Groupbar Chart</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -51,7 +48,7 @@
         </div>
     </nav>
 
-    <div class="d-flex mt-5 pt-4"></div>
+    <div class="d-flex mt-4 pt-3"></div>
 
     {% block content %}
     {% endblock %}
