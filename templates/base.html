@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>잡다한 코딩 프로젝트 웹</title>
+    <meta name="description" content="내 맘대로 취미 코딩, 잡다한 컨텐츠">
+    <meta name="keywords" content="개인홈페이지, 코딩, 파이썬, 자바스크립트, 웹어플리케이션, 웹 컨텐츠, 블로그, 엑셀문서, 데이터시각화, 차트">
+    <meta name="author" content="dalllab">
+    <meta name="og:site_name" content="dalllab">
+    <meta name="og:title" content="잡다한 코딩 프로젝트 웹">
+    <meta name="og:description" content="내 맘대로 취미 코딩, 잡다한 컨텐츠">
+    <meta name="og:keywords" content="개인홈페이지, 코딩, 파이썬, 자바스크립트, 웹어플리케이션, 웹 컨텐츠, 블로그, 엑셀문서, 데이터시각화, 차트">
+    <meta name="og:type" content="website">
+    <meta name="og:url" content="http://dalllab.com">
+    <meta name="og:image" content="{{ url_for('static', filename='img/welcomeImg.png') }}"/>
+    <meta name="google-site-verification" content="tQ9BBKk13Q6wyVttYdphcGn1FQl2PpoE5G-jpT3iXVY" />
+    <meta name="naver-site-verification" content="050006e0229cbf8c23fd4210a2b667dfbbb3c7b1" />
+    
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+}
+    </style>
+</head>
+
+<body class="d-flex flex-column bg-light w-100 h-100">
+
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark ps-3">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-2" href="{{ url_for('index') }}"> dalllab </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse fs-6 ps-3" id="navbarNav">
+                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown ms-3">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Making Chart</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('chartImage.line') }}">Line Chart</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('chartImage.bar') }}">Bar Chart</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('chartImage.groupbar') }}">Groupbar Chart</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="d-flex mt-5 pt-4"></div>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="footer fixed-bottom mt-auto py-2 bg-light border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 text-start">
+                <span class="text-muted">da.II.lab</span>
+                </div>
+                <div class="col-8 text-end">
+                <span class="text-muted">오류신고: dalllab@naver.com</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='jquery-3.6.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+
+</body>
+</html>
