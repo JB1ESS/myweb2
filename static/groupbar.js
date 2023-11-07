@@ -14,7 +14,6 @@ function addXData(){
     xDataInput.setAttribute("name", 'xdata_input'+xDataNum);
     xDataInput.setAttribute("id", 'xdata_input'+xDataNum);
     xDataInput.setAttribute("style", 'width: 80px;');
-    xDataInput.setAttribute("placeholder", xDataNum+1);
     xDataInput.setAttribute("onfocus", 'addXData();return false');
 
     // xData 마지막 항목입력에서만 항목입력생성 이벤트 발생하도록 전에 있는 항목입력 이벤트 속성 삭제
@@ -118,28 +117,26 @@ function addYData(item){
 // 차트 업데이트 하기
 function makeChart(){
     title = document.getElementById("title_input").value;
-    xLabel = document.getElementById("xlabel_input").value;
     yLabel = document.getElementById("ylabel_input").value;
-    legend = document.getElementById("legend_switch1").checked;
     grid = document.getElementById("grid_switch1").checked;
-    bkwt = document.getElementById("bkwt_switch1").checked;
     borderTop = document.getElementById("border_top_switch1").checked;
     borderBottom = document.getElementById("border_bottom_switch1").checked;
     borderLeft = document.getElementById("border_left_switch1").checked;
     borderRight = document.getElementById("border_right_switch1").checked;
+    bkwt = document.getElementById("bkwt_switch1").checked;
+    isHorizon = document.getElementById("horizon_switch2").checked;
     
     for(var k=1; k<5; k++){
         if(document.getElementById("ratio_input" + k).checked){
             chartRatio = k;
-        }
-        
+        } 
     };
 
     totalX = xDataNum;
     totalY = yDataNum;
-
+    
     var xData = [];
-    for(var x=0; x<totalX; x++){
+    for(var x=0; x<xDataNum; x++){
         xData.push(document.getElementById("xdata_input"+x).value);
     };
 
@@ -163,23 +160,22 @@ function makeChart(){
     }else{
         document.querySelector("body").setAttribute('style', 'background-color:white;')
     }
-    
+
     // flask로 보낼 데이터 만들기
     inputData = {
         'title':title,
-        'xlabel':xLabel,
         'ylabel':yLabel,
-        'legend':legend,
         'grid':grid,
-        'xData':xData,
-        'yDataLabel':yDataLabel,
-        'yDataList':yDataList,
+        'categories':xData,
+        'items':yDataLabel,
+        'datas':yDataList,
         'bkwt':bkwt,
         'borderTop':borderTop,
         'borderBottom':borderBottom,
         'borderLeft':borderLeft,
         'borderRight':borderRight,
-        'chartRatio':chartRatio
+        'chartRatio':chartRatio,
+        'isHorizon':isHorizon
     };
     // console.log(inputData);
  
@@ -200,7 +196,7 @@ function makeChart(){
             chartImg.setAttribute("src", src);
         },
         error: function(request, status, error){
-            alert('Network Error, Try later.')
+            alert('Network Error, 나중에 다시 시도하세요')
             // alert(error);
         }
     })

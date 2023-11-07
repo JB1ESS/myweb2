@@ -4,6 +4,7 @@ from matplotlib.figure import Figure
 import urllib.parse
 import base64
 import platform
+import numpy as np
 
 bp = Blueprint('chartImage', __name__, url_prefix='/chartImage')
 
@@ -53,9 +54,28 @@ def bar_ajax():
     plot_data = urllib.parse.quote(base64.b64encode(img.read()).decode()) # base64 encode & URL-escape
     return jsonify(result = "success", result2 = plot_data)
 
+# 그룹바차트
 @bp.route('/groupbar', methods=('GET', 'POST'))
 def groupbar():
-    return "groupbar chart"
+    # 예시 차트 만들기
+    fig = create_groupbar()
+    img = BytesIO()  # create the buffer
+    fig.savefig(img, format='png')  # save figure to the buffer
+    img.seek(0)  # rewind your buffer
+    plot_data = urllib.parse.quote(base64.b64encode(img.read()).decode()) # base64 encode & URL-escape
+    return render_template('groupbar.html', img_file=plot_data)
+# 그룹바 차트 업데이트 ajax
+@bp.route('/groupbar_ajax', methods=['POST'])
+def groupbar_ajax():
+    data = request.get_json() # 자바스크립트로 부터 데이터 받아오기
+    # 차트 만들기
+    fig = create_groupbar(data['title'], data['ylabel'], data['grid'], data['categories'], data['items'], data['datas'], data['bkwt'], data['borderTop'], data['borderBottom'], data['borderLeft'], data['borderRight'], data['chartRatio'], data['isHorizon'])
+    img = BytesIO()  # create the buffer
+    fig.savefig(img, format='png')  # save figure to the buffer
+    img.seek(0)  # rewind your buffer
+    plot_data = urllib.parse.quote(base64.b64encode(img.read()).decode()) # base64 encode & URL-escape
+    return jsonify(result = "success", result2 = plot_data)
+
 
 
 
@@ -159,6 +179,82 @@ def create_bar(title='chart title', ylabel='y-axis', gridSw=False, xdata=['a','b
 
     if gridSw: # 그리드 On
         ax.grid()
+
+    return fig
+
+# 그룹바 차트 만들기
+def create_groupbar(title='CHART TITLE', ylabel='y-axis', gridSw=False, categories = ["1Q", "2Q", "3Q", "4Q"], items = ['A', 'B', 'C'], datas = [[30,40,10,20], [35,25,30,40], [20,30,40,50]], bkwt=False, borderTop=True, borderBottom=True, borderLeft=True, borderRight=True, chartRatio=3, isHorizon=False):
+    bcolor, fcolor = bkwtTrans(bkwt) # 흑백전환
+    font = fontSelect() # 글자폰트
+
+    width = 1 / (1 + len(items)) # the width of the bars
+    offset = list(np.arange(len(categories)))
+    groupOffsets = []
+    xticksOffset = [0 for i in range(len(categories))]
+
+    # item & data 간격 구하기
+    for i in range(len(items)):
+        tempOffsets = []
+        for j in range(len(categories)):
+            tempOffsets.append(offset[j] + (width * i))
+            xticksOffset[j] += tempOffsets[j]
+        # print(tempOffsets)
+        groupOffsets.append(tempOffsets)
+    # print(groupOffsets)
+
+    # categories 간격 구하기
+    for o in range(len(categories)):
+        xticksOffset[o] = xticksOffset[o] / len(items)
+    # print(xticksOffset)
+
+    # 차트설정
+    fig = Figure(figsize=(10,int(chartRatio)*2.5), facecolor=(bcolor), layout="constrained")
+    ax = fig.subplots(1, 1) # figure 수량 matrix
+    ax.set_facecolor(bcolor) # 차트 내부 face 색상
+    ax.set_title(title, fontsize=20, family=font, color=fcolor)
+    ax.tick_params(labelcolor=fcolor) # 틱 색상
+
+    # 차트 만들기
+    if isHorizon: # 종/횡 바 차트 만들기
+        ax.set_xlabel(ylabel, family=font, color=fcolor)
+        ax.set_yticks(xticksOffset, categories, family=font)
+        for k in range(len(items)):
+            rects = ax.barh(groupOffsets[k], datas[k], width, label=items[k])
+            ax.bar_label(rects, padding=3, color=fcolor)
+    else:
+        ax.set_ylabel(ylabel, family=font, color=fcolor)
+        ax.set_xticks(xticksOffset, categories, family=font)
+        for k in range(len(items)):
+            rects = ax.bar(groupOffsets[k], datas[k], width, label=items[k])
+            ax.bar_label(rects, padding=3, color=fcolor)
+
+    # 외곽선
+    if borderTop:
+        ax.spines.top.set_visible(True)
+        ax.spines.top.set_color(fcolor)
+    else:
+        ax.spines.top.set_visible(False)
+
+    if borderBottom:
+        ax.spines.bottom.set_visible(True)
+        ax.spines.bottom.set_color(fcolor)
+    else:
+        ax.spines.bottom.set_visible(False)
+    if borderLeft:
+        ax.spines.left.set_visible(True)
+        ax.spines.left.set_color(fcolor)
+    else:
+        ax.spines.left.set_visible(False) 
+
+    if borderRight:
+        ax.spines.right.set_visible(True)
+        ax.spines.right.set_color(fcolor)
+    else:
+        ax.spines.right.set_visible(False)
+
+    if gridSw: # 그리드 On
+        ax.grid()
+    ax.legend(prop={'family':font, 'size':10})
 
     return fig
 
